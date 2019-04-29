@@ -1,0 +1,48 @@
+<form autocomplete="off" #createUserModal="ngForm" (ngSubmit)="save()">
+    <h1 mat-dialog-title>{{ "CreateNewAirport" | localize }}</h1>
+    <mat-dialog-content style="width:800px;height:300px;">
+        <br />
+        <div class="row-fluid">
+            <div class="col-md-6">
+                <mat-form-field>
+                    <input matInput
+                           name="AirportCode"
+                           [placeholder]="'AirportCode' | localize"
+                           [(ngModel)]="airport.code"
+                           required
+                           maxlength="3" />
+                </mat-form-field>
+                <mat-form-field>
+                    <input matInput
+                           name="AirportName"
+                           [placeholder]="'AirportName' | localize"
+                           [(ngModel)]="airport.name"
+                           required
+                           minlength="2"
+                           maxlength="50" />
+                </mat-form-field>
+                <mat-form-field>
+                    <input matInput
+                           name="AirportAddress"
+                           [placeholder]="'AirportAddress' | localize"
+                           [(ngModel)]="airport.address"
+                           required
+                           minlength="2"
+                           maxlength="200" />
+                </mat-form-field>
+            </div>
+        </div>
+    </mat-dialog-content>
+    <div mat-dialog-actions align="end">
+        <button mat-button type="button" [disabled]="saving" (click)="close(false)">
+            {{ "Cancel" | localize }}
+        </button>
+        <button mat-flat-button
+                type="submit"
+                flex="15"
+                color="primary"
+                [disabled]="!createAirportModal.form.valid || saving">
+            {{ "Save" | localize }}
+        </button>
+    </div>
+</form>

@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<localizationDictionary culture="ru">
+  <texts>
+    <text name="HomePage" value="Домашняя страница" />
+    <text name="About" value="О проекте" />
+    <text name="WelcomeMessage" value="Добро пожаловать в GalaxySky!" />
+    <text name="FormIsNotValidMessage" value="Форма неверна. Проверьте и исправьте ошибки." />
+    <text name="TenantNameCanNotBeEmpty" value="Имя арендатора не может быть пустым" />
+    <text name="InvalidUserNameOrPassword" value="Неверное имя пользователя или пароль" />
+    <text name="ThereIsNoTenantDefinedWithName{0}" value="Арендатор с именем {0} не найден" />
+    <text name="TenantIsNotActive" value="Арендатор {0} не активен." />
+    <text name="UserIsNotActiveAndCanNotLogin" value="Пользователь {0} не активен и не может войти." />
+    <text name="UserEmailIsNotConfirmedAndCanNotLogin">Ваш почтовый адрес не подтвержден. Вы не можете войти.</text>
+    <text name="UserLockedOutMessage">Учетная запись пользователя заблокирована. Попробуйте позже.</text>
+    <text name="PleaseEnterLoginInformation" value="Введите информацию для входа" />
+    <text name="TenancyName" value="Имя арендатора" />
+    <text name="UserNameOrEmail" value="Имя или email пользователя" />
+    <text name="Password" value="Пароль" />
+    <text name="ResetPassword" value="Сбросить пароль" />
+    <text name="UpdatePassword" value="Изменить пароль" />
+    <text name="RememberMe" value="Запомнить меня" />
+    <text name="LogIn" value="Вход" />
+    <text name="LoginFailed" value="Вход не удался!" />
+    <text name="NameSurname" value="Фамилия" />
+    <text name="UserName" value="Имя" />
+    <text name="Name" value="Имя" />
+    <text name="Surname" value="Фамилия" />
+    <text name="EmailAddress" value="Адрес Email" />
+    <text name="Tenants" value="Арендаторы" />
+    <text name="SavedSuccessfully" value="Сохранено успешно" />
+    <text name="CreateNewTenant" value="Создать нового арендатора" />
+    <text name="AdminEmailAddress" value="Адрес email администратора" />
+    <text name="AdminPassword" value="Пароль администратора" />
+    <text name="Save" value="Сохранить" />
+    <text name="Cancel" value="Отмена" />
+    <text name="TenantName_Regex_Description" value="Имя арендатора должно быть не меньше 2 символов в длину, начинаться с буквы и состоять из букв, цифр, дефисов и символов подчеркивания." />
+    <text name="DefaultPasswordIs" value="Пароль по умолчанию - {0}" />
+    <text name="CanBeEmptyToLoginAsHost" value="Может быть пустым для входа в качестве владельца." />
+    <text name="Register" value="Регистрация" />
+    <text name="OrLoginWith" value="Или вход" />
+    <text name="WaitingForActivationMessage" value="Ваша учетная запись ожидает активации системным администратором." />
+    <text name="TenantSelection" value="Выбор арендатора" />
+    <text name="TenantSelection_Detail" value="Выберите один из следующих арендаторов." />
+    <text name="Logout" value="Выход" />
+    <text name="RegisterFormUserNameInvalidMessage">Не вводите адрес email в качестве имени пользователя.</text>
+    <text name="DatabaseConnectionString" value="Строка подключения к базе данных" />
+    <text name="Users" value="Пользователи" />
+    <text name="IsActive" value="Активен" />
+    <text name="FullName" value="Полное имя" />
+    <text name="CreateNewUser" value="Создать нового пользователя" />
+    <text name="Yes" value="Да" />
+    <text name="No" value="Нет" />
+    <text name="Optional" value="Не обязательно" />
+    <text name="LeaveEmptyToSwitchToHost">Остаьте пустым, чтобы переключиться к владельцу</text>
+    <text name="CurrentTenant">Текущий арендатор</text>
+    <text name="NotSelected">Не выбрано</text>
+    <text name="Change">Изменить</text>
+    <text name="ChangeTenant">Сменить арендатора</text>
+    <text name="MultiLevelMenu">Многоуровневое меню</text>
+    <text name="Back">Назад</text>
+    <text name="SuccessfullyRegistered">Успешно зарегистрировано</text>
+    <text name="WaitingForEmailActivation">Ваш адрес email должен быть активирован</text>
+    <text name="Roles">Роли</text>
+    <text name="DisplayName">Отображаемое имя</text>
+    <text name="Edit">Правка</text>
+    <text name="Delete">Удалить</text>
+    <text name="CreateNewRole">Создать новую роль</text>
+    <text name="RoleName">Имя роли</text>
+    <text name="Actions">Действия</text>
+    <text name="CouldNotCompleteLoginOperation">Не удалось выполнить вход. Попробуйте позже.</text>
+    <text name="CouldNotValidateExternalUser">Не удалось подтвердить внешнего пользователя</text>
+    <text name="EditRole">Правка роли</text>
+    <text name="EditTenant">Правка арендатора</text>
+    <text name="EditUser">Правка пользователя</text>
+    <text name="TenantIdIsNotActive{0}">TenantId {0} не активен</text>
+    <text name="UnknownTenantId{0}">Неизвестный tenantId {0}</text>
+    <text name="ThisFieldIsRequired">Это поле обязательно</text>
+    <text name="PleaseWait">Подождите...</text>
+    <text name="Administration">Администрировение</text>
+    <text name="ClearAll">Очистить все</text>
+    <text name="ClearOthers">Очистить другие</text>
+    <text name="LabelOptions">Настройки надписи</text>
+    <text name="Permissions">Разрешения</text>
+    <text name="RoleDescription">Описание роли</text>
+    <text name="Refresh">Обновить</text>
+    <text name="Create">Создать</text>
+    <text name="UserDetails">Подробности пользователя</text>
+    <text name="UserRoles">Роли пользователя</text>
+    <text name="ConfirmPassword">Подтвердите пароль</text>
+    <text name="Version">Версия</text>
+    <text name="On">Вкл</text>
+    <text name="Off">Выкл</text>
+    <text name="AreYouSureWantToDelete">Вы уверены, что хотите удалить {0}?</text>
+    <text name="StartTyping">Начните набирать</text>
+    <text name="Skins">Скины</text>
+    <text name="Settings">Настройки</text>
+    <text name="Filter">Фильтр</text>
+    <text name="CreateNewAirport">Создать новый аэропорт</text>
+    <text name="Airports">Аэропорты</text>
+  </texts>
+</localizationDictionary>
