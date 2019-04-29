@@ -151,60 +151,6 @@ export class AirportServiceProxy {
     }
 
     /**
-     * @param id (optional) 
-     * @return Success
-     */
-    get(id: number | null | undefined): Observable<AirportDto> {
-        let url_ = this.baseUrl + "/api/services/app/Airport/Get?";
-        if (id !== undefined)
-            url_ += "Id=" + encodeURIComponent("" + id) + "&"; 
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "application/json"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGet(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGet(<any>response_);
-                } catch (e) {
-                    return <Observable<AirportDto>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<AirportDto>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processGet(response: HttpResponseBase): Observable<AirportDto> {
-        const status = response.status;
-        const responseBlob = 
-            response instanceof HttpResponse ? response.body : 
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = resultData200 ? AirportDto.fromJS(resultData200) : new AirportDto();
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<AirportDto>(<any>null);
-    }
-
-    /**
      * @param sorting (optional) 
      * @param skipCount (optional) 
      * @param maxResultCount (optional) 
@@ -262,6 +208,60 @@ export class AirportServiceProxy {
             }));
         }
         return _observableOf<PagedResultDtoOfAirportDto>(<any>null);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    get(id: number | null | undefined): Observable<AirportDto> {
+        let url_ = this.baseUrl + "/api/services/app/Airport/Get?";
+        if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGet(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGet(<any>response_);
+                } catch (e) {
+                    return <Observable<AirportDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<AirportDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGet(response: HttpResponseBase): Observable<AirportDto> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? AirportDto.fromJS(resultData200) : new AirportDto();
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<AirportDto>(<any>null);
     }
 
     /**
@@ -2173,61 +2173,6 @@ export interface IRegisterOutput {
     canLogin: boolean | undefined;
 }
 
-export class AirportDto implements IAirportDto {
-    code: string;
-    name: string;
-    address: string;
-    id: number | undefined;
-
-    constructor(data?: IAirportDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.code = data["code"];
-            this.name = data["name"];
-            this.address = data["address"];
-            this.id = data["id"];
-        }
-    }
-
-    static fromJS(data: any): AirportDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new AirportDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["code"] = this.code;
-        data["name"] = this.name;
-        data["address"] = this.address;
-        data["id"] = this.id;
-        return data; 
-    }
-
-    clone(): AirportDto {
-        const json = this.toJSON();
-        let result = new AirportDto();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IAirportDto {
-    code: string;
-    name: string;
-    address: string;
-    id: number | undefined;
-}
-
 export class PagedResultDtoOfAirportDto implements IPagedResultDtoOfAirportDto {
     totalCount: number | undefined;
     items: AirportDto[] | undefined;
@@ -2281,6 +2226,144 @@ export class PagedResultDtoOfAirportDto implements IPagedResultDtoOfAirportDto {
 export interface IPagedResultDtoOfAirportDto {
     totalCount: number | undefined;
     items: AirportDto[] | undefined;
+}
+
+export class AirportDto implements IAirportDto {
+    id: number | undefined;
+    code: string;
+    name: string;
+    address: string;
+    planes: PlaneDto[] | undefined;
+
+    constructor(data?: IAirportDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.id = data["id"];
+            this.code = data["code"];
+            this.name = data["name"];
+            this.address = data["address"];
+            if (data["planes"] && data["planes"].constructor === Array) {
+                this.planes = [];
+                for (let item of data["planes"])
+                    this.planes.push(PlaneDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): AirportDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new AirportDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["code"] = this.code;
+        data["name"] = this.name;
+        data["address"] = this.address;
+        if (this.planes && this.planes.constructor === Array) {
+            data["planes"] = [];
+            for (let item of this.planes)
+                data["planes"].push(item.toJSON());
+        }
+        return data; 
+    }
+
+    clone(): AirportDto {
+        const json = this.toJSON();
+        let result = new AirportDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IAirportDto {
+    id: number | undefined;
+    code: string;
+    name: string;
+    address: string;
+    planes: PlaneDto[] | undefined;
+}
+
+export class PlaneDto implements IPlaneDto {
+    id: number;
+    code: string | undefined;
+    type: string;
+    tailNumber: string;
+    brand: string;
+    model: string;
+    name: string;
+    airportId: number;
+
+    constructor(data?: IPlaneDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.id = data["id"];
+            this.code = data["code"];
+            this.type = data["type"];
+            this.tailNumber = data["tailNumber"];
+            this.brand = data["brand"];
+            this.model = data["model"];
+            this.name = data["name"];
+            this.airportId = data["airportId"];
+        }
+    }
+
+    static fromJS(data: any): PlaneDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PlaneDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["code"] = this.code;
+        data["type"] = this.type;
+        data["tailNumber"] = this.tailNumber;
+        data["brand"] = this.brand;
+        data["model"] = this.model;
+        data["name"] = this.name;
+        data["airportId"] = this.airportId;
+        return data; 
+    }
+
+    clone(): PlaneDto {
+        const json = this.toJSON();
+        let result = new PlaneDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IPlaneDto {
+    id: number;
+    code: string | undefined;
+    type: string;
+    tailNumber: string;
+    brand: string;
+    model: string;
+    name: string;
+    airportId: number;
 }
 
 export class CreateAirportDto implements ICreateAirportDto {

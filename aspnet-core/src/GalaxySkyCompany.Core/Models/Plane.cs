@@ -13,7 +13,6 @@ namespace GalaxySkyCompany.Models
         public const int MaxModelLength = 20;
         public const int MaxNameLength = 50;
 
-        [Required]
         [StringLength(MaxCodeLength)]
         public virtual string Code { get; set; }
 

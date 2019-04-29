@@ -39,6 +39,8 @@ import { ChangePasswordComponent } from './users/change-password/change-password
 import { ResetPasswordDialogComponent } from './users/reset-password/reset-password.component';
 //airports
 import { AirportsComponent } from '@app/airports/airports.component';
+import { CreateAirportDialogComponent } from '@app/airports/create-airport/create-airport-dialog.component';
+import { EditAirportDialogComponent } from '@app/airports/edit-airport/edit-airport-dialog.component';
 
 @NgModule({
   declarations: [
@@ -66,7 +68,9 @@ import { AirportsComponent } from '@app/airports/airports.component';
     ChangePasswordComponent,
     ResetPasswordDialogComponent,
     // airports
-    AirportsComponent
+      AirportsComponent,
+      CreateAirportDialogComponent,
+      EditAirportDialogComponent
   ],
   imports: [
     CommonModule,
@@ -92,7 +96,10 @@ import { AirportsComponent } from '@app/airports/airports.component';
     // users
     CreateUserDialogComponent,
     EditUserDialogComponent,
-    ResetPasswordDialogComponent
+      ResetPasswordDialogComponent,
+    // airports
+      CreateAirportDialogComponent,
+      EditAirportDialogComponent
   ]
 })
 export class AppModule {}

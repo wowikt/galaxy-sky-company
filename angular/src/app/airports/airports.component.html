@@ -46,17 +46,13 @@
                                     <mat-icon>menu</mat-icon>
                                 </button>
                                 <mat-menu #actionsMenu="matMenu">
-                                    <button mat-menu-item (click)="editUser(user)">
+                                    <button mat-menu-item (click)="editAirport(airport)">
                                         <mat-icon>edit</mat-icon>
                                         <span>{{ "Edit" | localize }}</span>
                                     </button>
-                                    <button mat-menu-item (click)="delete(user)">
+                                    <button mat-menu-item (click)="delete(airport)">
                                         <mat-icon>delete</mat-icon>
                                         <span>{{ "Delete" | localize }}</span>
-                                    </button>
-                                    <button mat-menu-item (click)="resetPassword(user)">
-                                        <mat-icon>lock</mat-icon>
-                                        <span>{{ "Reset Password" | localize }}</span>
                                     </button>
                                 </mat-menu>
                             </td>
@@ -67,6 +63,9 @@
                     <abp-pagination-controls (pageChange)="getDataPage($event)" id="server">
                     </abp-pagination-controls>
                 </div>
+                <button mat-mini-fab color="primary" class="pull-right" (click)="createAirport()">
+                    <mat-icon>add</mat-icon>
+                </button>
             </div>
         </div>
     </div>
