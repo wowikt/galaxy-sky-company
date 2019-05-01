@@ -97,5 +97,11 @@
     <text name="Filter">Фильтр</text>
     <text name="CreateNewAirport">Создать новый аэропорт</text>
     <text name="Airports">Аэропорты</text>
+    <text name="AirportCode">Код</text>
+    <text name="AirportName">Название</text>
+    <text name="AirportAddress">Адрес</text>
+    <text name="PlaneCount">Количество самолётов</text>
+    <text name="AirportDetails">Подробности</text>
+    <text name="AirportPlanes">Самолёты</text>
   </texts>
 </localizationDictionary>

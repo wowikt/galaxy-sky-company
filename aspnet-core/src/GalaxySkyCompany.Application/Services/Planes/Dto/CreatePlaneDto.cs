@@ -1,17 +1,12 @@
-﻿using Abp.Application.Services.Dto;
-using Abp.AutoMapper;
+﻿using Abp.AutoMapper;
 using GalaxySkyCompany.Models;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GalaxySkyCompany.Services.Planes.Dto
 {
-    [AutoMap(typeof(Plane))]
-    public class PlaneDto : EntityDto
+    [AutoMapTo(typeof(Plane))]
+    public class CreatePlaneDto
     {
         [StringLength(Plane.MaxCodeLength)]
         public string Code { get; set; }

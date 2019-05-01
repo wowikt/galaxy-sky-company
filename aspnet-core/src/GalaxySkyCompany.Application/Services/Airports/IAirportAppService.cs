@@ -11,5 +11,8 @@ namespace GalaxySkyCompany.Services.Airports
 {
     public interface IAirportAppService : IAsyncCrudAppService<AirportDto, int, PagedAndSortedResultRequestDto, CreateAirportDto, AirportDto>
     {
+        Task<AirportDetailsDto> GetAirportDetails(EntityDto<int> input);
+
+        Task<ListResultDto<AirportDto>> GetAllAirports();
     }
 }

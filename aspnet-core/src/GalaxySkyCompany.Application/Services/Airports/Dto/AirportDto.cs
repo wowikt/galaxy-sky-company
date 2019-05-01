@@ -11,20 +11,19 @@ namespace GalaxySkyCompany.Services.Airports.Dto
     public class AirportDto : EntityDto
     {
         [Required]
-        public int Id;
-
-        [Required]
         [StringLength(Airport.CodeLength)]
-        public virtual string Code { get; set; }
+        public string Code { get; set; }
 
         [Required]
         [StringLength(Airport.MaxNameLehgth)]
-        public virtual string Name { get; set; }
+        public string Name { get; set; }
 
         [Required]
         [StringLength(Airport.MaxAddressLength)]
-        public virtual string Address { get; set; }
+        public string Address { get; set; }
 
-        public ICollection<PlaneDto> Planes { get; set; }
+        public int PlaneCount { get; set; }
+
+        public int PilotCount { get; set; }
     }
 }

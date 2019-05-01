@@ -97,5 +97,11 @@
     <text name="Filter">Filter</text>
     <text name="CreateNewAirport">Create new airport</text>
     <text name="Airports">Airports</text>
+    <text name="AirportCode">Code</text>
+    <text name="AirportName">Name</text>
+    <text name="AirportAddress">Address</text>
+    <text name="PlaneCount">Plane Count</text>
+    <text name="AirportDetails">Airport Details</text>
+    <text name="AirportPlanes">Airport Planes</text>
   </texts>
 </localizationDictionary>

@@ -10,7 +10,7 @@
                             <input matInput
                                    name="AirportCode"
                                    [placeholder]="'AirportCode' | localize"
-                                   [(ngModel)]="airport.code"
+                                   [(ngModel)]="airportDetails.code"
                                    required
                                    maxlength="3" />
                         </mat-form-field>
@@ -18,7 +18,7 @@
                             <input matInput
                                    name="AirportName"
                                    [placeholder]="'AirportName' | localize"
-                                   [(ngModel)]="airport.name"
+                                   [(ngModel)]="airportDetails.name"
                                    required
                                    minlength="2"
                                    maxlength="50" />
@@ -27,7 +27,7 @@
                             <input matInput
                                    name="AirportAddress"
                                    [placeholder]="'AirportAddress' | localize"
-                                   [(ngModel)]="airport.address"
+                                   [(ngModel)]="airportDetails.address"
                                    required
                                    minlength="2"
                                    maxlength="200" />
@@ -38,9 +38,19 @@
             <mat-tab [label]="'AirportPlanes' | localize">
                 <br />
                 <div class="row-fluid">
-                    <ng-template ngFor let-plane [ngForOf]="planes">
+                    <ng-template ngFor let-plane [ngForOf]="airportDetails.planes">
                         <div class="col-sm-6">
                             {{ plane.name }}
+                        </div>
+                    </ng-template>
+                </div>
+            </mat-tab>
+            <mat-tab [label]="'AirportPilots' | localize">
+                <br />
+                <div class="row-fluid">
+                    <ng-template ngFor let-pilot [ngForOf]="airportDetails.pilots">
+                        <div class="col-sm-6">
+                            {{ pilot.name }}
                         </div>
                     </ng-template>
                 </div>

@@ -10,7 +10,8 @@ import { AppComponentBase } from '@shared/app-component-base';
 import {
     AirportServiceProxy,
     AirportDto,
-    RoleDto
+    RoleDto,
+    AirportDetailsDto
 } from '@shared/service-proxies/service-proxies';
 
 @Component({
@@ -29,6 +30,7 @@ import {
 export class EditAirportDialogComponent extends AppComponentBase
     implements OnInit {
     saving = false;
+    airportDetails: AirportDetailsDto = new AirportDetailsDto();
     airport: AirportDto = new AirportDto();
     roles: RoleDto[] = [];
     checkedRolesMap: { [key: string]: boolean } = {};
@@ -43,13 +45,18 @@ export class EditAirportDialogComponent extends AppComponentBase
     }
 
     ngOnInit(): void {
-        this._airportService.get(this._id).subscribe(result => {
-            this.airport = result;
+        this._airportService.getAirportDetails(this._id).subscribe(result => {
+            this.airportDetails = result;
         });
     }
 
     save(): void {
         this.saving = true;
+
+        for (var property in this.airportDetails) {
+            if (this.airportDetails.hasOwnProperty(property))
+                (<any>this.airport)[property] = (<any>this.airportDetails)[property];
+        }
 
         this._airportService
             .update(this.airport)
