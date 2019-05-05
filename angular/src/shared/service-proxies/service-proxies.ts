@@ -597,6 +597,345 @@ export class ConfigurationServiceProxy {
 }
 
 @Injectable()
+export class PilotServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl ? baseUrl : "";
+    }
+
+    /**
+     * @return Success
+     */
+    getAllPilots(): Observable<ListResultDtoOfPilotDto> {
+        let url_ = this.baseUrl + "/api/services/app/Pilot/GetAllPilots";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAllPilots(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAllPilots(<any>response_);
+                } catch (e) {
+                    return <Observable<ListResultDtoOfPilotDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<ListResultDtoOfPilotDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetAllPilots(response: HttpResponseBase): Observable<ListResultDtoOfPilotDto> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? ListResultDtoOfPilotDto.fromJS(resultData200) : new ListResultDtoOfPilotDto();
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<ListResultDtoOfPilotDto>(<any>null);
+    }
+
+    /**
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
+     * @return Success
+     */
+    getAll(sorting: string | null | undefined, skipCount: number | null | undefined, maxResultCount: number | null | undefined): Observable<PagedResultDtoOfPilotDto> {
+        let url_ = this.baseUrl + "/api/services/app/Pilot/GetAll?";
+        if (sorting !== undefined)
+            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&"; 
+        if (skipCount !== undefined)
+            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&"; 
+        if (maxResultCount !== undefined)
+            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAll(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAll(<any>response_);
+                } catch (e) {
+                    return <Observable<PagedResultDtoOfPilotDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<PagedResultDtoOfPilotDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetAll(response: HttpResponseBase): Observable<PagedResultDtoOfPilotDto> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? PagedResultDtoOfPilotDto.fromJS(resultData200) : new PagedResultDtoOfPilotDto();
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<PagedResultDtoOfPilotDto>(<any>null);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    get(id: number | null | undefined): Observable<PilotDto> {
+        let url_ = this.baseUrl + "/api/services/app/Pilot/Get?";
+        if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGet(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGet(<any>response_);
+                } catch (e) {
+                    return <Observable<PilotDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<PilotDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGet(response: HttpResponseBase): Observable<PilotDto> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? PilotDto.fromJS(resultData200) : new PilotDto();
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<PilotDto>(<any>null);
+    }
+
+    /**
+     * @param input (optional) 
+     * @return Success
+     */
+    update(input: PilotDto | null | undefined): Observable<PilotDto> {
+        let url_ = this.baseUrl + "/api/services/app/Pilot/Update";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(input);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("put", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processUpdate(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processUpdate(<any>response_);
+                } catch (e) {
+                    return <Observable<PilotDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<PilotDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processUpdate(response: HttpResponseBase): Observable<PilotDto> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? PilotDto.fromJS(resultData200) : new PilotDto();
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<PilotDto>(<any>null);
+    }
+
+    /**
+     * @param input (optional) 
+     * @return Success
+     */
+    create(input: CreatePilotDto | null | undefined): Observable<PilotDto> {
+        let url_ = this.baseUrl + "/api/services/app/Pilot/Create";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(input);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCreate(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCreate(<any>response_);
+                } catch (e) {
+                    return <Observable<PilotDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<PilotDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processCreate(response: HttpResponseBase): Observable<PilotDto> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? PilotDto.fromJS(resultData200) : new PilotDto();
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<PilotDto>(<any>null);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    delete(id: number | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/Pilot/Delete?";
+        if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processDelete(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processDelete(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processDelete(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
+}
+
+@Injectable()
 export class PlaneServiceProxy {
     private http: HttpClient;
     private baseUrl: string;
@@ -2815,12 +3154,12 @@ export interface IAirportDetailsDto {
 }
 
 export class PlaneDto implements IPlaneDto {
-    code: string | undefined;
+    code: string;
     type: string;
     tailNumber: string;
     brand: string;
     model: string;
-    name: string;
+    name: string | undefined;
     airportId: number;
     pilotIds: number[] | undefined;
     id: number | undefined;
@@ -2886,12 +3225,12 @@ export class PlaneDto implements IPlaneDto {
 }
 
 export interface IPlaneDto {
-    code: string | undefined;
+    code: string;
     type: string;
     tailNumber: string;
     brand: string;
     model: string;
-    name: string;
+    name: string | undefined;
     airportId: number;
     pilotIds: number[] | undefined;
     id: number | undefined;
@@ -2903,6 +3242,7 @@ export class PilotDto implements IPilotDto {
     name: string;
     address: string;
     airportId: number;
+    planeIds: number[] | undefined;
     id: number | undefined;
 
     constructor(data?: IPilotDto) {
@@ -2921,6 +3261,11 @@ export class PilotDto implements IPilotDto {
             this.name = data["name"];
             this.address = data["address"];
             this.airportId = data["airportId"];
+            if (data["planeIds"] && data["planeIds"].constructor === Array) {
+                this.planeIds = [];
+                for (let item of data["planeIds"])
+                    this.planeIds.push(item);
+            }
             this.id = data["id"];
         }
     }
@@ -2939,6 +3284,11 @@ export class PilotDto implements IPilotDto {
         data["name"] = this.name;
         data["address"] = this.address;
         data["airportId"] = this.airportId;
+        if (this.planeIds && this.planeIds.constructor === Array) {
+            data["planeIds"] = [];
+            for (let item of this.planeIds)
+                data["planeIds"].push(item);
+        }
         data["id"] = this.id;
         return data; 
     }
@@ -2957,6 +3307,7 @@ export interface IPilotDto {
     name: string;
     address: string;
     airportId: number;
+    planeIds: number[] | undefined;
     id: number | undefined;
 }
 
@@ -3105,6 +3456,183 @@ export interface IChangeUiThemeInput {
     theme: string;
 }
 
+export class ListResultDtoOfPilotDto implements IListResultDtoOfPilotDto {
+    items: PilotDto[] | undefined;
+
+    constructor(data?: IListResultDtoOfPilotDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            if (data["items"] && data["items"].constructor === Array) {
+                this.items = [];
+                for (let item of data["items"])
+                    this.items.push(PilotDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): ListResultDtoOfPilotDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ListResultDtoOfPilotDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (this.items && this.items.constructor === Array) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data; 
+    }
+
+    clone(): ListResultDtoOfPilotDto {
+        const json = this.toJSON();
+        let result = new ListResultDtoOfPilotDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IListResultDtoOfPilotDto {
+    items: PilotDto[] | undefined;
+}
+
+export class PagedResultDtoOfPilotDto implements IPagedResultDtoOfPilotDto {
+    totalCount: number | undefined;
+    items: PilotDto[] | undefined;
+
+    constructor(data?: IPagedResultDtoOfPilotDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.totalCount = data["totalCount"];
+            if (data["items"] && data["items"].constructor === Array) {
+                this.items = [];
+                for (let item of data["items"])
+                    this.items.push(PilotDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): PagedResultDtoOfPilotDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PagedResultDtoOfPilotDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["totalCount"] = this.totalCount;
+        if (this.items && this.items.constructor === Array) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data; 
+    }
+
+    clone(): PagedResultDtoOfPilotDto {
+        const json = this.toJSON();
+        let result = new PagedResultDtoOfPilotDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IPagedResultDtoOfPilotDto {
+    totalCount: number | undefined;
+    items: PilotDto[] | undefined;
+}
+
+export class CreatePilotDto implements ICreatePilotDto {
+    code: string;
+    num: string;
+    name: string;
+    address: string;
+    airportId: number;
+    planeIds: number[] | undefined;
+
+    constructor(data?: ICreatePilotDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.code = data["code"];
+            this.num = data["num"];
+            this.name = data["name"];
+            this.address = data["address"];
+            this.airportId = data["airportId"];
+            if (data["planeIds"] && data["planeIds"].constructor === Array) {
+                this.planeIds = [];
+                for (let item of data["planeIds"])
+                    this.planeIds.push(item);
+            }
+        }
+    }
+
+    static fromJS(data: any): CreatePilotDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new CreatePilotDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["code"] = this.code;
+        data["num"] = this.num;
+        data["name"] = this.name;
+        data["address"] = this.address;
+        data["airportId"] = this.airportId;
+        if (this.planeIds && this.planeIds.constructor === Array) {
+            data["planeIds"] = [];
+            for (let item of this.planeIds)
+                data["planeIds"].push(item);
+        }
+        return data; 
+    }
+
+    clone(): CreatePilotDto {
+        const json = this.toJSON();
+        let result = new CreatePilotDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ICreatePilotDto {
+    code: string;
+    num: string;
+    name: string;
+    address: string;
+    airportId: number;
+    planeIds: number[] | undefined;
+}
+
 export class ListResultDtoOfPlaneDto implements IListResultDtoOfPlaneDto {
     items: PlaneDto[] | undefined;
 
@@ -3212,12 +3740,12 @@ export interface IPagedResultDtoOfPlaneDto {
 }
 
 export class CreatePlaneDto implements ICreatePlaneDto {
-    code: string | undefined;
+    code: string;
     type: string;
     tailNumber: string;
     brand: string;
     model: string;
-    name: string;
+    name: string | undefined;
     airportId: number;
     pilotIds: number[] | undefined;
 
@@ -3280,12 +3808,12 @@ export class CreatePlaneDto implements ICreatePlaneDto {
 }
 
 export interface ICreatePlaneDto {
-    code: string | undefined;
+    code: string;
     type: string;
     tailNumber: string;
     brand: string;
     model: string;
-    name: string;
+    name: string | undefined;
     airportId: number;
     pilotIds: number[] | undefined;
 }

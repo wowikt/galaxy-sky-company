@@ -40,7 +40,7 @@
                 <div class="row-fluid">
                     <ng-template ngFor let-plane [ngForOf]="airportDetails.planes">
                         <div class="col-sm-6">
-                            {{ plane.name }}
+                            {{ plane.brand }} {{ plane.model }} {{ plane.tailNumber }}
                         </div>
                     </ng-template>
                 </div>

@@ -13,6 +13,7 @@ namespace GalaxySkyCompany.Services.Planes.Dto
     [AutoMap(typeof(Plane))]
     public class PlaneDto : EntityDto
     {
+        [Required]
         [StringLength(Plane.MaxCodeLength)]
         public string Code { get; set; }
 
@@ -32,7 +33,6 @@ namespace GalaxySkyCompany.Services.Planes.Dto
         [StringLength(Plane.MaxModelLength)]
         public string Model { get; set; }
 
-        [Required]
         [StringLength(Plane.MaxNameLength)]
         public string Name { get; set; }
 

@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Abp.Application.Services;
 using Abp.Application.Services.Dto;
 using Abp.Domain.Repositories;
+using GalaxySkyCompany.Domain.Repositories;
 using GalaxySkyCompany.Models;
 using GalaxySkyCompany.Services.Planes.Dto;
 
@@ -11,8 +12,10 @@ namespace GalaxySkyCompany.Services.Planes
 {
     public class PlaneAppService : AsyncCrudAppService<Plane, PlaneDto, int, PagedAndSortedResultRequestDto, CreatePlaneDto, PlaneDto>, IPlaneAppService
     {
+        private readonly List<int> _emptyList = new List<int>();
+
         public PlaneAppService(
-            IRepository<Plane> planeRepository) :
+            IPlaneRepository planeRepository) :
             base(planeRepository)
         {
 
@@ -40,7 +43,7 @@ namespace GalaxySkyCompany.Services.Planes
                 entities.Select(p =>
                 {
                     var result = MapToEntityDto(p);
-                    result.PilotIds = new List<int>(p.PilotPlanes?.Select(pp => pp.PilotId) ?? new List<int>());
+                    result.PilotIds = new List<int>(p.PilotPlanes?.Select(pp => pp.PilotId) ?? _emptyList);
                     return result;
                 }).ToList()
             );
@@ -48,37 +51,28 @@ namespace GalaxySkyCompany.Services.Planes
 
         public override async Task<PlaneDto> Get(EntityDto<int> input)
         {
-            var entity = await Repository.GetAsync(input.Id);
+            var entity = await ((IPlaneRepository)Repository).GetWithPlanePilotsAsync(input.Id);
             var result = MapToEntityDto(entity);
-            result.PilotIds = new List<int>(entity.PilotPlanes.Select(pp => pp.PilotId));
+            result.PilotIds = new List<int>(entity.PilotPlanes?.Select(pp => pp.PilotId) ?? _emptyList);
             return result;
         }
 
         public override async Task<PlaneDto> Update(PlaneDto input)
         {
-            var entity = await GetEntityByIdAsync(input.Id);
+            var entity = await Repository.GetAsync(input.Id);
 
-            var currentPilotIds = new List<int>(entity.PilotPlanes.Select(pp => pp.PilotId));
-            var newPilotIds = new List<int>(input.PilotIds);
+            var currentPilotIds = await ((IPlaneRepository)Repository).GetPilotIdsAsync(input.Id);
+            var newPilotIds = new List<int>(input.PilotIds ?? _emptyList);
 
             MapToEntity(input, entity);
 
+            //await CurrentUnitOfWork.SaveChangesAsync();
+
             // Remove pilots for plane
-            foreach (var pilotId in currentPilotIds.Except(newPilotIds))
-            {
-                var record = entity.PilotPlanes.Single(pp => pp.PilotId == pilotId);
-                entity.PilotPlanes.Remove(record);
-            }
+            await ((IPlaneRepository)Repository).RemovePilotsAsync(input.Id, currentPilotIds.Except(newPilotIds));
 
             // Add pilots for plane
-            foreach (var pilotId in newPilotIds.Except(currentPilotIds))
-            {
-                entity.PilotPlanes.Add(new PilotPlane
-                {
-                    PilotId = pilotId,
-                    PlaneId = input.Id
-                });
-            }
+            await ((IPlaneRepository)Repository).AddPilotsAsync(input.Id, newPilotIds.Except(currentPilotIds));
 
             await CurrentUnitOfWork.SaveChangesAsync();
 
@@ -88,20 +82,13 @@ namespace GalaxySkyCompany.Services.Planes
         public override async Task<PlaneDto> Create(CreatePlaneDto input)
         {
             var entity = MapToEntity(input);
-            var newPilotIds = new List<int>(input.PilotIds ?? new List<int>());
+            var newPilotIds = new List<int>(input.PilotIds ?? _emptyList);
 
             await Repository.InsertAsync(entity);
-            await CurrentUnitOfWork.SaveChangesAsync();
+            //await CurrentUnitOfWork.SaveChangesAsync();
 
             // Add pilots for plane
-            foreach (var pilotId in newPilotIds)
-            {
-                entity.PilotPlanes.Add(new PilotPlane
-                {
-                    PilotId = pilotId,
-                    PlaneId = entity.Id
-                });
-            }
+            await ((IPlaneRepository)Repository).AddPilotsAsync(entity.Id, newPilotIds);
 
             await CurrentUnitOfWork.SaveChangesAsync();
 

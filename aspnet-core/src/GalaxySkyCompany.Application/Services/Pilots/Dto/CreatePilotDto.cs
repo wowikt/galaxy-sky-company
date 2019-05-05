@@ -1,5 +1,4 @@
-﻿using Abp.Application.Services.Dto;
-using Abp.AutoMapper;
+﻿using Abp.AutoMapper;
 using GalaxySkyCompany.Models;
 using System;
 using System.Collections.Generic;
@@ -10,8 +9,8 @@ using System.Threading.Tasks;
 
 namespace GalaxySkyCompany.Services.Pilots.Dto
 {
-    [AutoMap(typeof(Pilot))]
-    public class PilotDto : EntityDto
+    [AutoMapTo(typeof(Pilot))]
+    public class CreatePilotDto
     {
         [Required]
         [StringLength(Pilot.MaxCodeLength)]

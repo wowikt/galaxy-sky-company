@@ -44,7 +44,11 @@ import { EditAirportDialogComponent } from '@app/airports/edit-airport/edit-airp
 // planes
 import { PlanesComponent } from '@app/planes/planes.component';
 import { CreatePlaneDialogComponent } from '@app/planes/create-plane/create-plane-dialog.component';
-//import { EditPlanesDialogComponent } from '@app/planes/edit-plane/edit-plane-dialog.component';
+import { EditPlaneDialogComponent } from '@app/planes/edit-plane/edit-plane-dialog.component';
+// pilots
+import { PilotsComponent } from '@app/pilots/pilots.component';
+import { CreatePilotDialogComponent } from '@app/pilots/create-pilot/create-pilot-dialog.component';
+import { EditPilotDialogComponent } from '@app/pilots/edit-pilot/edit-pilot-dialog.component';
 
 @NgModule({
   declarations: [
@@ -77,7 +81,12 @@ import { CreatePlaneDialogComponent } from '@app/planes/create-plane/create-plan
       EditAirportDialogComponent,
       // planes
       PlanesComponent,
-      CreatePlaneDialogComponent
+      CreatePlaneDialogComponent,
+      EditPlaneDialogComponent,
+      // pilots
+      PilotsComponent,
+      CreatePilotDialogComponent,
+      EditPilotDialogComponent
   ],
   imports: [
     CommonModule,
@@ -108,7 +117,11 @@ import { CreatePlaneDialogComponent } from '@app/planes/create-plane/create-plan
       CreateAirportDialogComponent,
       EditAirportDialogComponent,
       // planes
-      CreatePlaneDialogComponent
+      CreatePlaneDialogComponent,
+      EditPlaneDialogComponent,
+      // pilots
+      CreatePilotDialogComponent,
+      EditPilotDialogComponent
   ]
 })
 export class AppModule {}

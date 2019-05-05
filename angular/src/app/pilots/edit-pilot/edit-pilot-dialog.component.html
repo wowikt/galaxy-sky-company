@@ -1,68 +1,49 @@
-<form autocomplete="off" #createPlaneModal="ngForm" (ngSubmit)="save()">
-    <h1 mat-dialog-title>{{ "CreateNewPlane" | localize }}</h1>
+<form autocomplete="off" #editPilotModal="ngForm" (ngSubmit)="save()">
+    <h1 mat-dialog-title>{{ "EditPilot" | localize }}</h1>
     <mat-dialog-content style="width:800px;height:500px;">
         <mat-tab-group>
-            <mat-tab [label]="'PlaneDetails' | localize">
+            <mat-tab [label]="'PilotDetails' | localize">
                 <br />
                 <div class="row-fluid">
                     <div class="col-md-6">
                         <mat-form-field>
                             <input matInput
-                                   name="PlaneCode"
-                                   [placeholder]="'PlaneCode' | localize"
-                                   [(ngModel)]="plane.code"
+                                   name="PilotCode"
+                                   [placeholder]="'PilotCode' | localize"
+                                   [(ngModel)]="pilot.code"
                                    required
                                    maxlength="10" />
                         </mat-form-field>
                         <mat-form-field>
-                            <mat-select [(ngModel)]="plane.type"
-                                        name="PlaneType"
-                                        [placeholder]="'PlaneType' | localize"
-                                        required>
-                                <mat-option *ngFor="let type of planeTypes" [value]="type">
-                                    {{type}}
-                                </mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                        <mat-form-field>
                             <input matInput
-                                   name="PlaneTailNumber"
-                                   [placeholder]="'PlaneTailNumber' | localize"
-                                   [(ngModel)]="plane.tailNumber"
+                                   name="PilotNum"
+                                   [placeholder]="'PilotNum' | localize"
+                                   [(ngModel)]="pilot.num"
                                    required
                                    minlength="2"
                                    maxlength="20" />
                         </mat-form-field>
                         <mat-form-field>
                             <input matInput
-                                   name="PlaneBrand"
-                                   [placeholder]="'PlaneBrand' | localize"
-                                   [(ngModel)]="plane.brand"
-                                   required
+                                   name="PilotName"
+                                   [placeholder]="'PilotName' | localize"
+                                   [(ngModel)]="pilot.name"
                                    minlength="2"
-                                   maxlength="20" />
+                                   maxlength="50" />
                         </mat-form-field>
                         <mat-form-field>
                             <input matInput
-                                   name="PlaneModel"
-                                   [placeholder]="'PlaneModel' | localize"
-                                   [(ngModel)]="plane.model"
+                                   name="PilotAddress"
+                                   [placeholder]="'PilotAddress' | localize"
+                                   [(ngModel)]="pilot.address"
                                    required
-                                   minlength="2"
-                                   maxlength="20" />
-                        </mat-form-field>
-                        <mat-form-field>
-                            <input matInput
-                                   name="PlaneName"
-                                   [placeholder]="'PlaneName' | localize"
-                                   [(ngModel)]="plane.name"
                                    minlength="2"
                                    maxlength="200" />
                         </mat-form-field>
                         <mat-form-field>
-                            <mat-select [(ngModel)]="plane.airportId"
+                            <mat-select [(ngModel)]="pilot.airportId"
                                         name="AirportId"
-                                        [placeholder]="'PlaneAirport' | localize"
+                                        [placeholder]="'PilotAirport' | localize"
                                         required>
                                 <mat-option *ngFor="let airport of airports" [value]="airport.id">
                                     {{airport.code}}: {{airport.name}}
@@ -72,18 +53,18 @@
                     </div>
                 </div>
             </mat-tab>
-            <mat-tab [label]="'PlanePilots' | localize">
+            <mat-tab [label]="'PilotPlanes' | localize">
                 <br />
                 <div class="body table-responsive">
                     <table class="table table-hover table-striped" [busy]="isTableLoading">
                         <thead>
                             <tr>
-                                <th>{{ "PilotName" | localize }}</th>
+                                <th>{{ "Plane" | localize }}</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr *ngFor="
-                                let pilot of (pilots
+                                let plane of (planes
                                   | paginate
                                     : {
                                         id: 'server',
@@ -93,9 +74,9 @@
                                       })
                                 ">
                                 <td>
-                                    <mat-checkbox [checked]="isPilotChecked(pilot.id)"
-                                                  (change)="onPilotChange(pilot, $event)">
-                                        {{ pilot.name }}
+                                    <mat-checkbox [checked]="isPlaneChecked(plane.id)"
+                                                  (change)="onPlaneChange(plane, $event)">
+                                        {{ plane.brand }} {{ plane.model }} ({{ plane.tailNumber }})
                                     </mat-checkbox>
                                 </td>
                             </tr>
@@ -117,7 +98,7 @@
                 type="submit"
                 flex="15"
                 color="primary"
-                [disabled]="!createPlaneModal.form.valid || saving">
+                [disabled]="!editPilotModal.form.valid || saving">
             {{ "Save" | localize }}
         </button>
     </div>

@@ -53,8 +53,8 @@ export class EditUserDialogComponent extends AppComponentBase
     });
   }
 
-  setInitialRolesStatus(): void {
-    _.map(this.roles, item => {
+    setInitialRolesStatus(): void {
+      _.map(this.roles, item => {
       this.checkedRolesMap[item.normalizedName] = this.isRoleChecked(
         item.normalizedName
       );

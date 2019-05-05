@@ -1,6 +1,7 @@
 ﻿using Abp.Application.Services.Dto;
 using Abp.AutoMapper;
 using GalaxySkyCompany.Models;
+using GalaxySkyCompany.Services.Planes.Dto;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -10,8 +11,8 @@ using System.Threading.Tasks;
 
 namespace GalaxySkyCompany.Services.Pilots.Dto
 {
-    [AutoMap(typeof(Pilot))]
-    public class PilotDto : EntityDto
+    [AutoMapFrom(typeof(Pilot))]
+    public class PilotDetailsDto : EntityDto
     {
         [Required]
         [StringLength(Pilot.MaxCodeLength)]
@@ -32,6 +33,6 @@ namespace GalaxySkyCompany.Services.Pilots.Dto
         [Required]
         public int AirportId { get; set; }
 
-        public ICollection<int> PlaneIds { get; set; }
+        public ICollection<PlaneDto> Planes { get; set; }
     }
 }

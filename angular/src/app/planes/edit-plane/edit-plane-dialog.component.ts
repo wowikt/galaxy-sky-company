@@ -1,11 +1,15 @@
-import { Component, Injector, OnInit } from '@angular/core';
-import { MatDialogRef, MatCheckboxChange } from '@angular/material';
+import { Component, Injector, Optional, Inject, OnInit } from '@angular/core';
+import {
+    MAT_DIALOG_DATA,
+    MatDialogRef,
+    MatCheckboxChange
+} from '@angular/material';
 import { finalize } from 'rxjs/operators';
 import * as _ from 'lodash';
 import {
     PlaneServiceProxy,
     PilotServiceProxy,
-    CreatePlaneDto,
+    PlaneDto,
     AirportDto,
     AirportServiceProxy,
     PilotDto,
@@ -14,7 +18,7 @@ import {
 import { PagedListingComponentBase, PagedRequestDto } from '@shared/paged-listing-component-base';
 
 @Component({
-    templateUrl: './create-plane-dialog.component.html',
+    templateUrl: './edit-plane-dialog.component.html',
     styles: [
         `
       mat-form-field {
@@ -26,11 +30,10 @@ import { PagedListingComponentBase, PagedRequestDto } from '@shared/paged-listin
     `
     ]
 })
-export class CreatePlaneDialogComponent extends PagedListingComponentBase<PilotDto>
+export class EditPlaneDialogComponent extends PagedListingComponentBase<PilotDto>
     implements OnInit {
-
     saving = false;
-    plane: CreatePlaneDto = new CreatePlaneDto();
+    plane: PlaneDto = new PlaneDto();
     airports: AirportDto[] = [];
     pilots: PilotDto[] = [];
     planeTypes: string[] = [
@@ -46,14 +49,19 @@ export class CreatePlaneDialogComponent extends PagedListingComponentBase<PilotD
         public _planeService: PlaneServiceProxy,
         public _airportService: AirportServiceProxy,
         public _pilotService: PilotServiceProxy,
-        private _dialogRef: MatDialogRef<CreatePlaneDialogComponent>
+        private _dialogRef: MatDialogRef<EditPlaneDialogComponent>,
+        @Optional() @Inject(MAT_DIALOG_DATA) private _id: number
     ) {
         super(injector);
     }
 
     ngOnInit(): void {
         super.ngOnInit();
-        this.plane.pilotIds = [];
+
+        this._planeService.get(this._id).subscribe(result => {
+            this.plane = result;
+        });
+
         this._airportService.getAllAirports().subscribe(result => {
             this.airports = result.items;
         });
@@ -63,7 +71,7 @@ export class CreatePlaneDialogComponent extends PagedListingComponentBase<PilotD
         this.saving = true;
 
         this._planeService
-            .create(this.plane)
+            .update(this.plane)
             .pipe(
                 finalize(() => {
                     this.saving = false;

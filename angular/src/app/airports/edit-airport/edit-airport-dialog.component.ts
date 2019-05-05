@@ -1,8 +1,7 @@
 import { Component, Injector, Optional, Inject, OnInit } from '@angular/core';
 import {
     MAT_DIALOG_DATA,
-    MatDialogRef,
-    MatCheckboxChange
+    MatDialogRef
 } from '@angular/material';
 import { finalize } from 'rxjs/operators';
 import * as _ from 'lodash';
@@ -10,7 +9,6 @@ import { AppComponentBase } from '@shared/app-component-base';
 import {
     AirportServiceProxy,
     AirportDto,
-    RoleDto,
     AirportDetailsDto
 } from '@shared/service-proxies/service-proxies';
 
@@ -32,8 +30,6 @@ export class EditAirportDialogComponent extends AppComponentBase
     saving = false;
     airportDetails: AirportDetailsDto = new AirportDetailsDto();
     airport: AirportDto = new AirportDto();
-    roles: RoleDto[] = [];
-    checkedRolesMap: { [key: string]: boolean } = {};
 
     constructor(
         injector: Injector,

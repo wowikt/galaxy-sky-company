@@ -11,8 +11,9 @@ namespace GalaxySkyCompany.Models
         public const int MaxTailNumberLength = 20;
         public const int MaxBrandLength = 20;
         public const int MaxModelLength = 20;
-        public const int MaxNameLength = 50;
+        public const int MaxNameLength = 200;
 
+        [Required]
         [StringLength(MaxCodeLength)]
         public virtual string Code { get; set; }
 
@@ -32,7 +33,6 @@ namespace GalaxySkyCompany.Models
         [StringLength(MaxModelLength)]
         public virtual string Model { get; set; }
 
-        [Required]
         [StringLength(MaxNameLength)]
         public virtual string Name { get; set; }
 

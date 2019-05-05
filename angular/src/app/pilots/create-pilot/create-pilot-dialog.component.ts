@@ -2,19 +2,20 @@ import { Component, Injector, OnInit } from '@angular/core';
 import { MatDialogRef, MatCheckboxChange } from '@angular/material';
 import { finalize } from 'rxjs/operators';
 import * as _ from 'lodash';
+import { AppComponentBase } from '@shared/app-component-base';
 import {
-    PlaneServiceProxy,
     PilotServiceProxy,
-    CreatePlaneDto,
+    CreatePilotDto,
     AirportDto,
     AirportServiceProxy,
-    PilotDto,
-    PagedResultDtoOfPilotDto
+    PlaneDto,
+    PlaneServiceProxy,
+    PagedResultDtoOfPlaneDto
 } from '@shared/service-proxies/service-proxies';
 import { PagedListingComponentBase, PagedRequestDto } from '@shared/paged-listing-component-base';
 
 @Component({
-    templateUrl: './create-plane-dialog.component.html',
+    templateUrl: './create-pilot-dialog.component.html',
     styles: [
         `
       mat-form-field {
@@ -26,34 +27,26 @@ import { PagedListingComponentBase, PagedRequestDto } from '@shared/paged-listin
     `
     ]
 })
-export class CreatePlaneDialogComponent extends PagedListingComponentBase<PilotDto>
+export class CreatePilotDialogComponent extends PagedListingComponentBase<PlaneDto>
     implements OnInit {
-
     saving = false;
-    plane: CreatePlaneDto = new CreatePlaneDto();
+    pilot: CreatePilotDto = new CreatePilotDto();
     airports: AirportDto[] = [];
-    pilots: PilotDto[] = [];
-    planeTypes: string[] = [
-        this.l("PassengerPlane"),
-        this.l("CargoPlane"),
-        this.l("SpecialPlane"),
-        this.l("Helicopter"),
-        this.l("OtherAircraft")
-    ];
+    planes: PlaneDto[] = [];
 
     constructor(
         injector: Injector,
-        public _planeService: PlaneServiceProxy,
-        public _airportService: AirportServiceProxy,
         public _pilotService: PilotServiceProxy,
-        private _dialogRef: MatDialogRef<CreatePlaneDialogComponent>
+        public _airportService: AirportServiceProxy,
+        public _planeService: PlaneServiceProxy,
+        private _dialogRef: MatDialogRef<CreatePilotDialogComponent>
     ) {
         super(injector);
     }
 
     ngOnInit(): void {
         super.ngOnInit();
-        this.plane.pilotIds = [];
+        this.pilot.planeIds = [];
         this._airportService.getAllAirports().subscribe(result => {
             this.airports = result.items;
         });
@@ -62,8 +55,8 @@ export class CreatePlaneDialogComponent extends PagedListingComponentBase<PilotD
     save(): void {
         this.saving = true;
 
-        this._planeService
-            .create(this.plane)
+        this._pilotService
+            .create(this.pilot)
             .pipe(
                 finalize(() => {
                     this.saving = false;
@@ -79,18 +72,18 @@ export class CreatePlaneDialogComponent extends PagedListingComponentBase<PilotD
         this._dialogRef.close(result);
     }
 
-    isPilotChecked(pilotId: number): boolean {
-        return _.includes(this.plane.pilotIds, pilotId);
+    isPlaneChecked(planeId: number): boolean {
+        return _.includes(this.pilot.planeIds, planeId);
     }
 
-    onPilotChange(pilot: PilotDto, $event: MatCheckboxChange) {
+    onPlaneChange(pilot: PlaneDto, $event: MatCheckboxChange) {
         if (!$event.checked) {
-            var index: number = this.plane.pilotIds.indexOf(pilot.id, 0);
+            var index: number = this.pilot.planeIds.indexOf(pilot.id, 0);
             if (index > -1) {
-                this.plane.pilotIds.splice(index, 1);
+                this.pilot.planeIds.splice(index, 1);
             }
         } else {
-            this.plane.pilotIds.push(pilot.id);
+            this.pilot.planeIds.push(pilot.id);
         }
     }
 
@@ -98,20 +91,20 @@ export class CreatePlaneDialogComponent extends PagedListingComponentBase<PilotD
         request: PagedRequestDto,
         pageNumber: number,
         finishedCallback: Function): void {
-        this._pilotService
+        this._planeService
             .getAll(null, request.skipCount, request.maxResultCount)
             .pipe(
                 finalize(() => {
                     finishedCallback();
                 })
             )
-            .subscribe((result: PagedResultDtoOfPilotDto) => {
-                this.pilots = result.items;
+            .subscribe((result: PagedResultDtoOfPlaneDto) => {
+                this.planes = result.items;
                 this.showPaging(result, pageNumber);
             });
     }
 
-    protected delete(entity: PilotDto): void {
+    protected delete(entity: PlaneDto): void {
         throw new Error("Method not implemented.");
     }
 }

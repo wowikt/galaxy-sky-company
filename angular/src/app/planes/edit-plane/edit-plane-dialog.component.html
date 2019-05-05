@@ -1,5 +1,5 @@
-<form autocomplete="off" #createPlaneModal="ngForm" (ngSubmit)="save()">
-    <h1 mat-dialog-title>{{ "CreateNewPlane" | localize }}</h1>
+<form autocomplete="off" #editPlaneModal="ngForm" (ngSubmit)="save()">
+    <h1 mat-dialog-title>{{ "EditPlane" | localize }}</h1>
     <mat-dialog-content style="width:800px;height:500px;">
         <mat-tab-group>
             <mat-tab [label]="'PlaneDetails' | localize">
@@ -117,7 +117,7 @@
                 type="submit"
                 flex="15"
                 color="primary"
-                [disabled]="!createPlaneModal.form.valid || saving">
+                [disabled]="!editPlaneModal.form.valid || saving">
             {{ "Save" | localize }}
         </button>
     </div>

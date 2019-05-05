@@ -5,7 +5,7 @@ import { appModuleAnimation } from '@shared/animations/routerTransition';
 import { PagedListingComponentBase, PagedRequestDto } from 'shared/paged-listing-component-base';
 import { PlaneServiceProxy, PlaneDto, PagedResultDtoOfPlaneDto } from '@shared/service-proxies/service-proxies';
 import { CreatePlaneDialogComponent } from './create-plane/create-plane-dialog.component';
-//import { EditPlaneDialogComponent } from './edit-Plane/edit-Plane-dialog.component';
+import { EditPlaneDialogComponent } from './edit-plane/edit-plane-dialog.component';
 //import { Moment } from 'moment';
 
 @Component({
@@ -26,7 +26,7 @@ export class PlanesComponent extends PagedListingComponentBase<PlaneDto> {
 
     constructor(
         injector: Injector,
-        private _PlaneService: PlaneServiceProxy,
+        private _planeService: PlaneServiceProxy,
         private _dialog: MatDialog
     ) {
         super(injector);
@@ -54,7 +54,7 @@ export class PlanesComponent extends PagedListingComponentBase<PlaneDto> {
         finishedCallback: Function
     ): void {
 
-        this._PlaneService
+        this._planeService
             .getAll(null, request.skipCount, request.maxResultCount)
             .pipe(
                 finalize(() => {
@@ -69,10 +69,10 @@ export class PlanesComponent extends PagedListingComponentBase<PlaneDto> {
 
     protected delete(Plane: PlaneDto): void {
         abp.message.confirm(
-            this.l('UserDeleteWarningMessage', Plane.name),
+            this.l('PlaneDeleteWarningMessage', Plane.name),
             (result: boolean) => {
                 if (result) {
-                    this._PlaneService.delete(Plane.id).subscribe(() => {
+                    this._planeService.delete(Plane.id).subscribe(() => {
                         abp.notify.success(this.l('SuccessfullyDeleted'));
                         this.refresh();
                     });
@@ -85,10 +85,10 @@ export class PlanesComponent extends PagedListingComponentBase<PlaneDto> {
         let createOrEditPlaneDialog;
         if (id === undefined || id <= 0) {
             createOrEditPlaneDialog = this._dialog.open(CreatePlaneDialogComponent);
-        //} else {
-        //    createOrEditPlaneDialog = this._dialog.open(EditPlaneDialogComponent, {
-        //        data: id
-        //    });
+        } else {
+            createOrEditPlaneDialog = this._dialog.open(EditPlaneDialogComponent, {
+                data: id
+            });
         }
 
         createOrEditPlaneDialog.afterClosed().subscribe(result => {
