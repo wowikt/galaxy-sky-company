@@ -1,33 +1,16 @@
-# Introduction
+# Инструкция по развёртыванию приложения
 
-This is a template to create **ASP.NET Core MVC / Angular** based startup projects for [ASP.NET Boilerplate](https://aspnetboilerplate.com/Pages/Documents). It has 2 different versions:
+1. Откройте в Visual Studio 2017+ проект <папка проекта>\aspnet-core\GalaxySkyCompany.sln.
+2. Выберите в качестве стартовго проекта GalaxySkyCompany.Web.Host.
+3. Создайте подходящую базу данных (например, GalaxySkyCompanyDb).
+4. В двух файлах appsettings.json (в проектах GalaxySkyCompany.Migrator и GalaxySkyCompany.Web.Host) укажите правильную строку подключения.
+5. Соберите проект.
+6. Запустите проект GalaxySkyCompany.Migrator.
+7. Запустите основной проект, убедитесь, что открылось окно браузера с адресом http://localhost:21021, а в нём окно swagger.
+8. Запустите интерпретатор командной строки и перейдите в папку <папка проекта>\angular.
+9. У вас должны быть установлены: nodejs 6.9+ with npm 3.10+, Typescript 2.0+. Если нет, установите.
+10. Выполните команду npm install.
+11. Выполните команду npm start.
+12. После завершения компиляции на предыдущем шаге откройте в браузере страницу http://localhost:4200.
+13. На домашней странице нажмите круглую кнопку со значком + в изображении монитора, сразу под надписью SAMPLE DASHBOARD.
 
-1. [ASP.NET Core MVC & jQuery](https://aspnetboilerplate.com/Pages/Documents/Zero/Startup-Template-Core) (server rendered multi-page application).
-2. [ASP.NET Core & Angular](https://aspnetboilerplate.com/Pages/Documents/Zero/Startup-Template-Angular) (single page application).
- 
-User Interface is based on [BSB Admin theme](https://github.com/gurayyarar/AdminBSBMaterialDesign).
- 
-# Download
-
-Create & download your project from https://aspnetboilerplate.com/Templates
-
-# Screenshots
-
-#### Sample Dashboard Page
-![](_screenshots/module-zero-core-template-ui-home.png)
-
-#### User Creation Modal
-![](_screenshots/module-zero-core-template-ui-user-create-modal.png)
-
-#### Login Page
-
-![](_screenshots/module-zero-core-template-ui-login.png)
-
-# Documentation
-
-* [ASP.NET Core MVC & jQuery version.](https://aspnetboilerplate.com/Pages/Documents/Zero/Startup-Template-Core)
-* [ASP.NET Core & Angular  version.](https://aspnetboilerplate.com/Pages/Documents/Zero/Startup-Template-Angular)
-
-# License
-
-[MIT](LICENSE)."# galaxy-sky-company" 

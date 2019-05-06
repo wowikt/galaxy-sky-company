@@ -66,8 +66,6 @@ namespace GalaxySkyCompany.Services.Planes
 
             MapToEntity(input, entity);
 
-            //await CurrentUnitOfWork.SaveChangesAsync();
-
             // Remove pilots for plane
             await ((IPlaneRepository)Repository).RemovePilotsAsync(input.Id, currentPilotIds.Except(newPilotIds));
 
@@ -85,7 +83,6 @@ namespace GalaxySkyCompany.Services.Planes
             var newPilotIds = new List<int>(input.PilotIds ?? _emptyList);
 
             await Repository.InsertAsync(entity);
-            //await CurrentUnitOfWork.SaveChangesAsync();
 
             // Add pilots for plane
             await ((IPlaneRepository)Repository).AddPilotsAsync(entity.Id, newPilotIds);

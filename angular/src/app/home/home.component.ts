@@ -1,6 +1,7 @@
 import { Component, Injector, AfterViewInit } from '@angular/core';
 import { AppComponentBase } from '@shared/app-component-base';
 import { appModuleAnimation } from '@shared/animations/routerTransition';
+import { HomeServiceProxy } from '@shared/service-proxies/service-proxies';
 
 @Component({
     templateUrl: './home.component.html',
@@ -9,9 +10,16 @@ import { appModuleAnimation } from '@shared/animations/routerTransition';
 export class HomeComponent extends AppComponentBase implements AfterViewInit {
 
     constructor(
-        injector: Injector
+        injector: Injector,
+        private _homeService: HomeServiceProxy
     ) {
         super(injector);
+    }
+
+    generateData(): void {
+        this._homeService.generateRandomDataAsync().subscribe(() => {
+
+        });
     }
 
     ngAfterViewInit(): void {
@@ -90,22 +98,22 @@ export class HomeComponent extends AppComponentBase implements AfterViewInit {
             ((window as any).Morris).Donut({
                 element: 'donut_chart',
                 data: [{
-                        label: 'Chrome',
-                        value: 37
-                    }, {
-                        label: 'Firefox',
-                        value: 30
-                    }, {
-                        label: 'Safari',
-                        value: 18
-                    }, {
-                        label: 'Opera',
-                        value: 12
-                    },
-                    {
-                        label: 'Other',
-                        value: 3
-                    }],
+                    label: 'Chrome',
+                    value: 37
+                }, {
+                    label: 'Firefox',
+                    value: 30
+                }, {
+                    label: 'Safari',
+                    value: 18
+                }, {
+                    label: 'Opera',
+                    value: 12
+                },
+                {
+                    label: 'Other',
+                    value: 3
+                }],
                 colors: ['rgb(233, 30, 99)', 'rgb(0, 188, 212)', 'rgb(255, 152, 0)', 'rgb(0, 150, 136)', 'rgb(96, 125, 139)'],
                 formatter: function (y) {
                     return y + '%';

@@ -16,6 +16,7 @@ import * as ApiServiceProxies from './service-proxies';
         ApiServiceProxies.AirportServiceProxy,
         ApiServiceProxies.PlaneServiceProxy,
         ApiServiceProxies.PilotServiceProxy,
+        ApiServiceProxies.HomeServiceProxy,
         { provide: HTTP_INTERCEPTORS, useClass: AbpHttpInterceptor, multi: true }
     ]
 })

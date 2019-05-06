@@ -1,8 +1,15 @@
-﻿<div [@routerTransition]>
-
+<div [@routerTransition]>
     <div class="block-header">
         <h2>SAMPLE DASHBOARD</h2>
     </div>
+
+    <div class="row clearfix">
+        <button mat-mini-fab color="primary" class="left" type="button" (click)="generateData()">
+            <mat-icon>add_to_queue</mat-icon>
+        </button>
+    </div>
+
+    <div><br /></div>
 
     <!-- Widgets -->
     <div class="row clearfix">
@@ -94,9 +101,9 @@
             <div class="card">
                 <div class="body bg-pink">
                     <div class="sparkline" data-type="line" data-spot-Radius="4" data-highlight-Spot-Color="rgb(233, 30, 99)" data-highlight-Line-Color="#fff"
-                         data-min-Spot-Color="rgb(255,255,255)" data-max-Spot-Color="rgb(255,255,255)" data-spot-Color="rgb(255,255,255)"
-                         data-offset="90" data-width="100%" data-height="92px" data-line-Width="2" data-line-Color="rgba(255,255,255,0.7)"
-                         data-fill-Color="rgba(0, 188, 212, 0)">
+                            data-min-Spot-Color="rgb(255,255,255)" data-max-Spot-Color="rgb(255,255,255)" data-spot-Color="rgb(255,255,255)"
+                            data-offset="90" data-width="100%" data-height="92px" data-line-Width="2" data-line-Color="rgba(255,255,255,0.7)"
+                            data-fill-Color="rgba(0, 188, 212, 0)">
                         12,10,9,6,5,6,10,5,7,5,12,13,7,12,11
                     </div>
                     <ul class="dashboard-stat-list">
@@ -306,5 +313,4 @@
         </div>
         <!-- #END# Browser Usage -->
     </div>
-
 </div>
